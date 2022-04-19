@@ -1,5 +1,4 @@
-import set
-import card
+import time
 from set_question_builder import *
 
 while True:
@@ -7,5 +6,6 @@ while True:
     try:
         while True:
                 question_display(answer_num, question_time, imported_set)
+                time.sleep(2)
     except KeyboardInterrupt:
         pass

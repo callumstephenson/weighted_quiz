@@ -1,7 +1,7 @@
 import sys
-import card
-import set
-from threading import Timer
+from card import *
+from set import *
+from threading import Thread
 import time
 
 def set_builder():
@@ -17,7 +17,7 @@ def set_builder():
         answer = line.split('|')[1].strip()
         tempcard = card(question,answer)
         card_list.append(tempcard)
-        return set(card_list, InputFile[:-4])
+    return set(card_list, InputFile[:-4])
 
 def intro():
     'intro to the program, takes user input on set selection, number of answers, and questiontime'
@@ -25,28 +25,36 @@ def intro():
     imported_set = set_builder()
     answer_num = -1
     while answer_num <= 1:
-        answer_num = int(input("Input the amount of possible answers you would like per question"))
+        answer_num = int(input("Input the amount of possible answers you would like per question: "))
     question_time = -1
     while question_time <= 3:
-        question_time = int(input("Input the amount of time you would like per question in seconds (min 3secs)"))
+        question_time = int(input("Input the amount of time you would like per question in seconds (min 3secs): "))
     return answer_num, question_time, imported_set
 
 def question_display(answer_num, question_time, imported_set):
     'builds questions based on weighting, takes answer numbers, question time and imported set as args'
     question, correct_ans, ans_list, selected_card = imported_set.question_builder(answer_num)
-    print(question)
+    print("\n" + question)
     time.sleep(question_time/5)
     for i in range(answer_num):
         print(str(i+1)+'.', ans_list[i])
-    t = Timer(question_time, print, ['Sorry, times up!'])
-    t.start()
+    
     start_time = time.time()
-    guess = int(input("Input answer position number")-1)
-    answer = ans_list[guess]
+    guess = int(input("Input answer number: "))-1
     time_elapsed = time.time() - start_time
-    t.cancel()
+    answer = ans_list[guess]
+    if time_elapsed >= question_time:
+        if answer == correct_ans:
+            print("You got it right but you didn't answer in time!")
+            selected_card.updateWeight(question_time, time_elapsed, True)
+        else:
+            print("You ran out of time and got the answer wrong!")
+            selected_card.updateWeight(question_time, time_elapsed)
     if answer == correct_ans:
+        print("Answer correct!")
         selected_card.updateWeight(question_time, time_elapsed, True)
     else:
+        print("Answer incorrect!")
+        print("Correct answer was", correct_ans + "\n")
         selected_card.updateWeight(question_time, time_elapsed)
 

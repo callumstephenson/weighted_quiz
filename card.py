@@ -6,10 +6,11 @@ class card():
         self.inRotation = True
     
     def __repr__(self):
-        print("The question is", self.question)
-        print("The answer is", self.answer)
-        print("The current weight is", self.weight)
-        print("Current card in rotation?",self.inRotation)
+        d = "The question is " + str(self.question) +"\n"
+        d += "The answer is " + str(self.answer) +"\n"
+        d += "The current weight is " + str(self.weight) +"\n"
+        d += "Current card in rotation? " + str(self.inRotation)
+        return d
 
     def updateWeight(self,time,time_elapsed,ansCorrect=False):
         'updates the weight of the card object based on if the answer is correct/incorrect'
