@@ -27,7 +27,7 @@ def intro():
     while answer_num <= 1:
         answer_num = int(input("Input the amount of possible answers you would like per question: "))
     question_time = -1
-    while question_time <= 3:
+    while question_time < 3:
         question_time = int(input("Input the amount of time you would like per question in seconds (min 3secs): "))
     return answer_num, question_time, imported_set
 
