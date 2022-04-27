@@ -32,7 +32,7 @@ def intro():
     return answer_num, question_time, imported_set
 
 def question_display(answer_num, question_time, imported_set):
-    'builds questions based on weighting, takes answer numbers, question time and imported set as args'
+    'builds questions based on weighting, takes answer number, question time and imported set as args'
     question, correct_ans, ans_list, selected_card = imported_set.question_builder(answer_num)
     print("\n" + question)
     time.sleep(question_time/5)
